@@ -1,0 +1,2121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jinara – Original Oil Paintings & Custom Art</title>
+    <meta name="description" content="Jinara creates bespoke hand-crafted oil paintings. Commission portraits, landscapes, pet portraits, and more. Based in Kerala, delivering worldwide." />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* ═══════════════════════════════════
+           DESIGN TOKENS
+        ═══════════════════════════════════ */
+        :root {
+            --orange:     #7A3E12;
+            --orange-lt:  #945122;
+            --red:        #5c2e0b;
+            --red-lt:     #d7c0b0;
+            --yellow:     #d5c295;
+            --yellow-lt:  #f3dca3;
+            --blue:       #1a5276;
+            --blue-lt:    #2980b9;
+            --dark:       #1c1109;
+            --body-text:  #3d2b1f;
+            --muted:      #7a5c48;
+            --light-bg:   #fdf9f5;
+            --white:      #ffffff;
+            --border:     rgba(122, 62, 18, 0.18);
+
+            --font-display: 'Playfair Display', serif;
+            --font-script:  'Dancing Script', cursive;
+            --font-body:    'Poppins', sans-serif;
+
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 28px;
+
+            --shadow-sm:  0 2px 12px rgba(28,17,9,0.08);
+            --shadow-md:  0 8px 32px rgba(28,17,9,0.12);
+            --shadow-lg:  0 20px 60px rgba(28,17,9,0.15);
+
+            --header-h: 110px;
+        }
+
+        /* ═══════════════════════════════════
+           RESET & BASE
+        ═══════════════════════════════════ */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body {
+            background: var(--white);
+            color: var(--body-text);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        img { display: block; max-width: 100%; height: auto; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* ═══════════════════════════════════
+           UTILITIES
+        ═══════════════════════════════════ */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+        }
+        .section-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--orange);
+            margin-bottom: 0.75rem;
+        }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.9rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+        .section-title em { color: var(--orange); font-style: italic; }
+        .section-sub {
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.75;
+            max-width: 540px;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--orange), var(--red));
+            color: var(--white);
+            padding: 0.85rem 2rem;
+            border-radius: var(--radius-lg);
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: transform 0.25s, box-shadow 0.25s;
+            box-shadow: 0 4px 20px rgba(191,163,101,0.35);
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(191,163,101,0.45); }
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 2px solid var(--orange);
+            color: var(--orange);
+            padding: 0.82rem 2rem;
+            border-radius: var(--radius-lg);
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: background 0.25s, color 0.25s, transform 0.25s;
+            cursor: pointer;
+        }
+        .btn-outline:hover { background: var(--orange); color: var(--white); transform: translateY(-2px); }
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        /* ═══════════════════════════════════
+           HEADER
+        ═══════════════════════════════════ */
+        #site-header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            height: var(--header-h);
+            display: flex;
+            align-items: center;
+            background: transparent;
+            border-bottom: none;
+            transition: height 0.4s ease, background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+        #site-header.scrolled {
+            height: 85px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+        }
+        #site-header:not(.scrolled) .nav-desktop a:not(.nav-cta) {
+            color: var(--white);
+        }
+        #site-header:not(.scrolled) .hamburger span {
+            background: var(--white);
+        }
+        #site-header:not(.scrolled) .logo-link img {
+            filter: brightness(0) invert(1);
+        }
+        #site-header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo-link {
+            display: flex;
+            align-items: center;
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+            transition: all 0.3s ease;
+        }
+        .logo-link:hover {
+            background: transparent;
+            transform: translateY(-2px);
+        }
+        .logo-link img {
+            height: 82px;
+            width: auto;
+            object-fit: contain;
+            transition: height 0.3s ease, filter 0.3s ease;
+        }
+        #site-header.scrolled .logo-link img {
+            height: 60px;
+        }
+
+        /* Desktop Nav */
+        .nav-desktop { display: flex; align-items: center; gap: 2rem; }
+        .nav-desktop a {
+            font-size: 0.83rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--body-text);
+            transition: color 0.2s;
+        }
+        .nav-desktop a:hover { color: var(--orange); }
+        .nav-cta {
+            background: linear-gradient(135deg, var(--orange), var(--red));
+            color: var(--white) !important;
+            padding: 0.5rem 1.3rem;
+            border-radius: var(--radius-lg);
+            font-size: 0.82rem !important;
+            transition: transform 0.2s, box-shadow 0.2s !important;
+            box-shadow: 0 3px 14px rgba(191,163,101,0.3);
+        }
+        .nav-cta:hover { transform: translateY(-1px) !important; box-shadow: 0 5px 18px rgba(191,163,101,0.45) !important; }
+        .nav-cta-outline {
+            background: transparent;
+            border: 1.5px solid var(--orange);
+            color: var(--orange) !important;
+            box-shadow: none;
+        }
+        .nav-cta-outline:hover {
+            background: rgba(191,163,101,0.05);
+            box-shadow: none !important;
+        }
+        #site-header:not(.scrolled) .nav-cta-outline {
+            color: var(--white) !important;
+            border-color: rgba(255, 255, 255, 0.7);
+        }
+        #site-header:not(.scrolled) .nav-cta-outline:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .nav-search-btn {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            padding: 0 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        .nav-search-btn:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+        #site-header:not(.scrolled) .nav-search-btn {
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 38px; height: 38px;
+            padding: 6px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            border-radius: var(--radius-sm);
+        }
+        .hamburger span {
+            display: block;
+            height: 2px;
+            background: var(--dark);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* Mobile Nav Drawer */
+        .nav-mobile {
+            display: none;
+            position: fixed;
+            top: var(--header-h);
+            left: 0; right: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(16px);
+            z-index: 999;
+            padding: 1.5rem 1.25rem 2rem;
+            flex-direction: column;
+            gap: 0;
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .nav-mobile.open { display: flex; opacity: 1; transform: translateY(0); }
+        #hero {
+            height: 100svh;
+            min-height: 100svh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 0 clamp(40px, 8vw, 100px) 0;
+        }
+        .hero-bg-image, .hero-bg-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .hero-bg-video {
+            opacity: 1;
+        }
+        #luxury-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: radial-gradient(circle at center, #1c1109 0%, #0c0805 100%);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        #luxury-canvas.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        .hero-bg-video.inactive {
+            opacity: 0 !important;
+            z-index: 0 !important;
+        }
+        .visual-toggle-btn {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 10;
+            background: rgba(28, 17, 9, 0.45);
+            border: 1px solid rgba(122, 62, 18, 0.4);
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .visual-toggle-btn:hover {
+            background: var(--orange);
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(122, 62, 18, 0.3);
+        }
+        .hero-vignette {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.25) 60%, rgba(0,0,0,0.75) 100%);
+            z-index: 2;
+        }
+        .hero-watermark {
+            display: none;
+        }
+        .hero-overlay-content {
+            position: relative;
+            z-index: 3;
+            max-width: 680px;
+            color: #ffffff;
+            text-align: left;
+        }
+        .hero-overlay-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.3rem, 6.2vw, 4.8rem);
+            font-weight: 700;
+            line-height: 1.06;
+            letter-spacing: 0.05em;
+            z-index: 3;
+        }
+        .hero-badge strong { font-size: 1.5rem; line-height: 1; }
+        .hero-frame-deco {
+            position: absolute;
+            top: -16px; right: -16px;
+            width: 60%; height: 60%;
+            border-top: 3px solid var(--orange);
+            border-right: 3px solid var(--orange);
+            border-radius: 0 var(--radius-md) 0 0;
+            opacity: 0.4;
+            z-index: 0;
+        }
+        .hero-overlay-sub {
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            margin-top: 1.5rem;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+        .btn-glass {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.95rem 2.2rem;
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            cursor: pointer;
+        }
+        .btn-glass-gold {
+            background: rgba(191, 163, 101, 0.15);
+            border: 1px solid rgba(191, 163, 101, 0.4);
+            color: var(--white);
+            box-shadow: 0 4px 30px rgba(191, 163, 101, 0.1);
+        }
+        .btn-glass-gold:hover {
+            background: linear-gradient(135deg, var(--orange), var(--red));
+            border-color: transparent;
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(191, 163, 101, 0.4);
+        }
+        .btn-glass-white {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: var(--white);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        .btn-glass-white:hover {
+            background: rgba(255, 255, 255, 0.98);
+            border-color: rgba(255, 255, 255, 0.98);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.25);
+        }
+
+        /* ═══════════════════════════════════
+           DIVIDER
+        ═══════════════════════════════════ */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 0 1.25rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0.5;
+        }
+        .divider::before, .divider::after {
+            content: ''; flex: 1; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--orange), transparent);
+        }
+        .divider-icon {
+            font-size: 1.2rem;
+            color: var(--orange);
+        }
+
+        /* ═══════════════════════════════════
+           ABOUT
+        ═══════════════════════════════════ */
+        #about {
+            padding: 6rem 0;
+            background: var(--light-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        .about-watermark {
+            display: none;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        .about-visual { position: relative; }
+        .about-img-box {
+            aspect-ratio: 3/4;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: linear-gradient(150deg, rgba(191,163,101,0.12), rgba(26,82,118,0.12)),
+                        repeating-linear-gradient(-40deg, rgba(191,163,101,0.04) 0px, rgba(191,163,101,0.04) 2px, transparent 2px, transparent 22px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-script);
+            font-size: 1.5rem;
+            color: var(--orange);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+        .about-img-box::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(145deg, rgba(191,163,101,0.2) 0%, rgba(26,82,118,0.15) 50%, rgba(240,165,0,0.1) 100%);
+        }
+        .about-img-text {
+            position: relative; z-index: 1;
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+        }
+        .about-frame-line {
+            position: absolute;
+            top: -20px; left: -20px;
+            right: 20px; bottom: 20px;
+            border: 2px solid rgba(191,163,101,0.25);
+            border-radius: var(--radius-md);
+            z-index: 0;
+        }
+        .about-badge {
+            position: absolute;
+            bottom: -24px; right: -24px;
+            background: linear-gradient(135deg, var(--orange), var(--red));
+            color: var(--white);
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            box-shadow: var(--shadow-md);
+            z-index: 2;
+        }
+        .about-badge strong { font-size: 1.5rem; line-height: 1.1; }
+        .about-text p {
+            color: var(--muted);
+            line-height: 1.85;
+            margin-bottom: 1rem;
+        }
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .stat-item {}
+        .stat-num {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--orange);
+            line-height: 1;
+        }
+        .stat-lbl {
+            font-size: 0.73rem;
+            color: var(--muted);
+            margin-top: 0.3rem;
+        }
+
+        /* ═══════════════════════════════════
+           SERVICES
+        ═══════════════════════════════════ */
+        #services { padding: 6rem 0; background: var(--white); }
+        .services-head { text-align: center; margin-bottom: 3.5rem; }
+        .services-head .section-sub { margin: 0 auto; }
+        .services-search-wrap {
+            max-width: 500px;
+            margin: 0 auto 3rem;
+            position: relative;
+        }
+        .services-search-wrap .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--orange);
+            font-size: 1.1rem;
+        }
+        #servicesSearch {
+            width: 100%;
+            padding: 1.1rem 1.1rem 1.1rem 3.2rem;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--dark);
+            background: rgba(253,249,245,0.5);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        #servicesSearch:focus {
+            outline: none;
+            border-color: var(--orange);
+            box-shadow: 0 5px 20px rgba(191,163,101,0.15);
+            background: var(--white);
+        }
+        .service-card.hidden {
+            display: none !important;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .service-card {
+            border-radius: var(--radius-md);
+            padding: 2rem 1.75rem;
+            background: var(--white);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+                        box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+                        border-color 0.4s;
+            box-shadow: var(--shadow-sm);
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            width: 0; height: 4px;
+            background: linear-gradient(90deg, var(--orange), var(--orange-lt));
+            transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+                        left 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .service-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(191,163,101,0.22);
+            border-color: rgba(191,163,101,0.35);
+        }
+        .service-card:hover::before {
+            width: 100%;
+            left: 0;
+        }
+        .service-icon {
+            font-size: 2.4rem;
+            margin-bottom: 1.1rem;
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .service-card:hover .service-icon {
+            transform: scale(1.25) rotate(-10deg);
+        }
+        .service-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.65rem;
+        }
+        .service-card p {
+            font-size: 0.88rem;
+            color: var(--muted);
+            line-height: 1.75;
+        }
+        .service-price {
+            margin-top: 1.2rem;
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--orange);
+        }
+
+        /* ═══════════════════════════════════
+           GALLERY (Process)
+        ═══════════════════════════════════ */
+        /* ═══════════════════════════════════
+           PREMIUM GALLERY (Glassmorphism)
+        ═══════════════════════════════════ */
+        #gallery {
+            padding: 6rem 0;
+            background: var(--light-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        /* Decorative glowing orbs in background */
+        #gallery::before {
+            content: '';
+            position: absolute;
+            top: -20%; left: -10%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(191,163,101,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        #gallery::after {
+            content: '';
+            position: absolute;
+            bottom: -20%; right: -10%;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(31,41,55,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        #gallery .container { position: relative; z-index: 1; }
+        
+        .gallery-head { text-align: center; margin-bottom: 2rem; }
+        .glow-tag {
+            background: rgba(191,163,101,0.1);
+            color: var(--orange);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(191,163,101,0.2);
+            border: 1px solid rgba(191,163,101,0.3);
+        }
+
+        /* Filter Tabs */
+        .gallery-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            color: var(--dark);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            background: rgba(255, 255, 255, 0.7);
+        }
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--orange), var(--yellow));
+            color: var(--white);
+            border-color: transparent;
+            box-shadow: 0 8px 25px rgba(191,163,101,0.4);
+        }
+
+        /* Grid */
+        .gallery-glass-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            min-height: 350px;
+            transition: opacity 0.4s ease;
+        }
+        @media (max-width: 900px) {
+            .gallery-glass-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .gallery-glass-grid { grid-template-columns: 1fr; }
+        }
+        .gallery-item {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            aspect-ratio: 4/3;
+        }
+        
+        .gallery-img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(191,163,101,0.25), 0 0 20px rgba(191,163,101,0.1);
+            border-color: rgba(191,163,101,0.4);
+            z-index: 10;
+        }
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1) rotate(1deg);
+        }
+        
+        .gallery-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(15,23,42,0.85), rgba(15,23,42,0.2) 50%, transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .gallery-item-title {
+            color: var(--white);
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            transform: translateY(20px);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            margin-bottom: 0.25rem;
+        }
+        .gallery-item-cat {
+            color: var(--yellow);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transform: translateY(20px);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition-delay: 0.05s;
+        }
+        .gallery-item:hover .gallery-item-title,
+        .gallery-item:hover .gallery-item-cat {
+            transform: translateY(0);
+        }
+
+        /* Pagination Controls */
+        .gallery-pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 3.5rem;
+            gap: 0.5rem;
+        }
+        .page-btn {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--dark);
+            font-weight: 600;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+        .page-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(191,163,101,0.2);
+            color: var(--orange);
+            background: var(--white);
+        }
+        .page-btn.active {
+            background: linear-gradient(135deg, var(--orange), var(--yellow));
+            color: var(--white);
+            border-color: transparent;
+            box-shadow: 0 5px 15px rgba(191,163,101,0.3);
+            transform: scale(1.1);
+        }
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: rgba(255,255,255,0.2);
+        }
+        .page-nav-text {
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            transition: color 0.3s;
+        }
+        .page-nav-text:hover:not(:disabled) { color: var(--orange); }
+        .page-nav-text:disabled { opacity: 0.4; cursor: not-allowed; }
+        
+        /* Fade animation class */
+        .fade-out { opacity: 0; transform: translateY(10px); }
+        .fade-in { opacity: 1; transform: translateY(0); }
+        .gallery-noise {
+            position: absolute; inset: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.1'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        /* ═══════════════════════════════════
+           ORDER FORM
+        ═══════════════════════════════════ */
+        #order { padding: 6rem 0; background: var(--white); }
+        .order-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        .order-info .section-sub { margin-bottom: 2rem; }
+        .order-steps { margin-top: 1.5rem; }
+        .order-step {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            padding: 0.9rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .order-step:last-child { border-bottom: none; }
+        .step-num {
+            flex-shrink: 0;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--orange), var(--yellow));
+            color: var(--white);
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-text { font-size: 0.88rem; color: var(--muted); line-height: 1.65; padding-top: 0.35rem; }
+
+        .order-form-wrap {
+            background: var(--light-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-group { margin-bottom: 1.1rem; }
+        .form-group label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--orange);
+            margin-bottom: 0.45rem;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: var(--white);
+            border: 1.5px solid rgba(191,163,101,0.2);
+            border-radius: var(--radius-sm);
+            padding: 0.72rem 1rem;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--dark);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--orange);
+            box-shadow: 0 0 0 3px rgba(191,163,101,0.1);
+        }
+        .form-group textarea { height: 100px; resize: vertical; }
+        .form-note {
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-bottom: 1.25rem;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 0.95rem;
+            background: linear-gradient(135deg, var(--orange), var(--red));
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: transform 0.25s, box-shadow 0.25s;
+            box-shadow: 0 4px 18px rgba(191,163,101,0.35);
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(191,163,101,0.45); }
+
+
+
+        /* ═══════════════════════════════════
+           CONTACT
+        ═══════════════════════════════════ */
+        #contact { padding: 6rem 0; background: var(--light-bg); }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        .contact-items { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.1rem; }
+        .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+        .ci-icon {
+            flex-shrink: 0;
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, rgba(191,163,101,0.1), rgba(191,163,101,0.05));
+            border: 1px solid rgba(191,163,101,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        .ci-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--orange);
+            margin-bottom: 0.2rem;
+        }
+        .ci-val { font-size: 0.9rem; color: var(--muted); }
+        .social-row { display: flex; gap: 0.75rem; margin-top: 2rem; }
+        .social-btn {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: background 0.2s, border-color 0.2s, transform 0.2s;
+        }
+        .social-btn:hover { background: linear-gradient(135deg, var(--orange), var(--red)); border-color: transparent; transform: translateY(-2px); }
+        .contact-form-wrap {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ═══════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════ */
+        footer {
+            background: var(--dark);
+            border-top: 1px solid rgba(232,98,26,0.15);
+            padding: 2.5rem 0;
+        }
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .footer-logo a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            transition: transform 0.2s;
+        }
+        .footer-logo a:hover {
+            transform: translateY(-2px);
+        }
+        .footer-logo img {
+            height: 52px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+        .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .footer-links a {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.5);
+            transition: color 0.2s;
+            letter-spacing: 0.05em;
+        }
+        .footer-links a:hover { color: var(--orange); }
+
+
+
+        /* ═══════════════════════════════════
+           RESPONSIVE — TABLET (≤900px)
+        ═══════════════════════════════════ */
+        @media (max-width: 900px) {
+            :root { --header-h: 90px; }
+            .logo-link img { height: 75px; }
+
+            .nav-desktop { display: none; }
+            .hamburger { display: flex; }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                padding: 3rem 0 2.5rem;
+                text-align: center;
+            }
+            .hero-eyebrow { justify-content: center; }
+            .hero-sub { margin-left: auto; margin-right: auto; }
+            .hero-actions { justify-content: center; }
+            .hero-stats { justify-content: center; }
+            .hero-visual {
+                display: flex;
+                justify-content: center;
+                margin-top: 1.5rem;
+                width: 100%;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .about-visual { max-width: 400px; margin: 0 auto; }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .gallery-item:first-child {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+
+            .order-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .footer-links { justify-content: center; }
+        }
+
+        /* ═══════════════════════════════════
+           RESPONSIVE — MOBILE (≤600px)
+        ═══════════════════════════════════ */
+        @media (max-width: 600px) {
+            #about, #services, #gallery, #order, #contact { padding: 4rem 0; }
+            #whatsapp { padding: 3.5rem 0; }
+
+            .form-row { grid-template-columns: 1fr; }
+
+            .about-stats { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+            .stat-num { font-size: 1.7rem; }
+
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.6rem;
+            }
+
+            .hero-stats { gap: 1.5rem; }
+            .hero-title { font-size: 2.4rem; }
+
+            .order-form-wrap { padding: 1.75rem 1.25rem; }
+            .contact-form-wrap { padding: 1.75rem 1.25rem; }
+
+            footer { padding: 2rem 0; }
+
+            .wa-float { bottom: 1.25rem; right: 1.25rem; width: 52px; height: 52px; font-size: 1.45rem; }
+        }
+
+        /* ═══════════════════════════════════
+           RESPONSIVE — SMALL MOBILE (≤380px)
+        ═══════════════════════════════════ */
+        @media (max-width: 380px) {
+            .btn-primary, .btn-outline, .btn-glass { padding: 0.75rem 1.4rem; font-size: 0.82rem; }
+            .hero-actions { flex-direction: column; align-items: center; }
+            .about-stats { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* ═══════════════════════════════════
+           SPLASH SCREEN
+        ═══════════════════════════════════ */
+        #splash {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        #splash.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #splash.gone { display: none; }
+
+        /* Main splash content */
+        .splash-inner {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Logo */
+        .splash-logo-wrap {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: splashFadeIn 1s ease 0.2s forwards;
+        }
+        @keyframes splashFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .splash-logo-wrap img {
+            height: clamp(140px, 22vw, 220px);
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* Tagline */
+        .splash-tagline {
+            opacity: 0;
+            transform: translateY(15px);
+            animation: splashFadeIn 0.8s ease 0.6s forwards;
+            font-family: var(--font-body);
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-weight: 300;
+            color: var(--muted);
+            letter-spacing: 0.05em;
+            margin-top: 1.5rem;
+        }
+
+        /* Enter button */
+        .splash-btn {
+            opacity: 0;
+            transform: translateY(15px);
+            animation: splashFadeIn 0.8s ease 1s forwards;
+            margin-top: 2.5rem;
+            display: inline-flex;
+            align-items: center;
+            background: transparent;
+            color: var(--dark);
+            border: 1px solid var(--border);
+            padding: 0.8rem 2.2rem;
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .splash-btn:hover {
+            background: var(--light-bg);
+            border-color: var(--orange);
+            color: var(--orange);
+            transform: translateY(-2px);
+        }
+        .splash-btn:active { transform: translateY(0); }
+    </style>
+</head>
+
+<body>
+
+
+
+
+
+<!-- ══════════════════════════════════════
+  HEADER
+════════════════════════════════════════ -->
+<header id="site-header">
+    <div class="container">
+        <a href="#hero" class="logo-link">
+            <img src="logo.png" alt="Jinara Logo" />
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="nav-desktop" aria-label="Primary navigation">
+            <a href="#hero">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#order">Order</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <!-- Hamburger -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<!-- Mobile Nav Drawer -->
+<nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation">
+    <a href="#hero" class="mobile-link">Home</a>
+    <a href="#about" class="mobile-link">About</a>
+    <a href="#services" class="mobile-link">Services</a>
+    <a href="#gallery" class="mobile-link">Gallery</a>
+    <a href="#order" class="mobile-link">Order</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+</nav>
+
+<!-- ══════════════════════════════════════
+  HERO
+════════════════════════════════════════ -->
+<section id="hero">
+    <!-- Interactive Canvas Layer matching "Cinematic Bronze Artistry" -->
+    <canvas id="luxury-canvas"></canvas>
+
+    <!-- Full-bleed cinematic video background -->
+    <video id="hero-video" class="hero-bg-video" autoplay muted playsinline style="z-index: 1;" preload="auto">
+        <source src="11932760-hd_1920_1080_25fps.mp4" type="video/mp4" />
+    </video>
+    
+    <!-- Visual Toggle Button (Glassmorphic) -->
+    <button class="visual-toggle-btn" id="visualToggleBtn" aria-label="Toggle Visual Background">
+        ✨ Interactive Bronze Canvas
+    </button>
+    
+    <!-- Cinematic Vignette Overlays -->
+    <div class="hero-vignette"></div>
+    <div class="hero-watermark"></div>
+
+    <div class="container">
+        <!-- Bottom left overlay content -->
+        <div class="hero-overlay-content">
+            <h1 class="hero-overlay-title">
+                Where Colour<br>
+                <em>Tells Stories</em><br>
+                in Oil.
+            </h1>
+            <p class="hero-overlay-sub">
+                Every brushstroke is a breath of life. Jinara creates bespoke oil paintings that transform your moments, spaces, and emotions into timeless masterpieces.
+            </p>
+            <div class="hero-actions">
+                <a href="#order" class="btn-glass btn-glass-gold">🎨 Custom Painting</a>
+                <a href="#services" class="btn-glass btn-glass-white">See Services</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Divider -->
+<div style="padding: 2rem 0;">
+    <div class="divider"><span class="divider-icon">✦</span></div>
+</div>
+
+<!-- ══════════════════════════════════════
+  ABOUT
+════════════════════════════════════════ -->
+<section id="about">
+    <div class="about-watermark"></div>
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-visual reveal">
+                <div class="about-frame-line"></div>
+                <div class="about-img-box">
+                    <div class="gallery-noise"></div>
+                    <div class="about-img-text">Oil on Canvas</div>
+                </div>
+                <div class="about-badge"><strong>10+</strong>Years of<br>Artistry</div>
+            </div>
+            <div class="about-text reveal">
+                <p class="section-tag">About Jinara</p>
+                <h2 class="section-title">A Passion Painted<br><em>With Every Stroke</em></h2>
+                <p>Jinara is a Kerala-based fine art studio dedicated to the ancient, soul-stirring medium of oil paint. With a deep reverence for classical technique and a contemporary eye, each painting is handcrafted with the finest pigments on archival canvas.</p>
+                <p>Whether it is a sweeping landscape, a cherished portrait, or an abstract expression of feeling — every custom painting begins with listening to your story and ends with a painting that lives and breathes on your wall.</p>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-num">350+</div>
+                        <div class="stat-lbl">Paintings Sold</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">12</div>
+                        <div class="stat-lbl">Countries Reached</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">100%</div>
+                        <div class="stat-lbl">Hand-Crafted</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  SERVICES
+════════════════════════════════════════ -->
+<section id="services">
+    <div class="container">
+        <div class="services-head reveal">
+            <p class="section-tag">What We Offer</p>
+            <h2 class="section-title">Our <em>Artistry</em> Services</h2>
+            <p class="section-sub">From intimate portraits to grand landscapes — every custom painting is treated as a unique creation, painted with care and delivered with pride.</p>
+        </div>
+        <div class="services-search-wrap reveal">
+            <div class="search-icon">🔍</div>
+            <input type="text" id="servicesSearch" placeholder="Search services (e.g. Portrait, Abstract)..." />
+        </div>
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-icon">🎨</div>
+                <h3>Semi Abstract</h3>
+                <p>Bold, expressive strokes blended with subtle realism. A perfect statement piece to bring dynamic energy to your modern space.</p>
+            </div>
+            <div class="service-card reveal" style="transition-delay: 0.1s;">
+                <div class="service-icon">🖌️</div>
+                <h3>Impressionistic Style</h3>
+                <p>Capturing the fleeting moments of light and color. Soft, evocative strokes that bring emotion and atmosphere to any room.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  GALLERY
+════════════════════════════════════════ -->
+<section id="gallery" class="premium-gallery">
+    <div class="container">
+        <div class="gallery-head reveal">
+            <p class="section-tag glow-tag">Portfolio</p>
+            <h2 class="section-title">Futuristic <em>Masterpieces</em></h2>
+            <p class="section-sub" style="margin:0 auto;">Explore our curated collection of aesthetic works.</p>
+        </div>
+        
+        <!-- Category Filter -->
+        <div class="gallery-filters reveal">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="oil">Oil Paintings</button>
+            <button class="filter-btn" data-filter="digital">Digital Art</button>
+            <button class="filter-btn" data-filter="photo">Photography</button>
+            <button class="filter-btn" data-filter="fashion">Fashion</button>
+        </div>
+
+        <!-- Gallery Viewport -->
+        <div class="gallery-viewport reveal">
+            <div class="gallery-glass-grid" id="galleryGrid">
+                <!-- Javascript will populate items here -->
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="gallery-pagination reveal" id="galleryPagination">
+            <!-- Javascript will populate pagination here -->
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  ORDER FORM
+════════════════════════════════════════ -->
+<section id="order">
+    <div class="container">
+        <div class="order-grid">
+            <div class="order-info reveal">
+                <p class="section-tag">Custom Painting</p>
+                <h2 class="section-title">Let's Create<br><em>Your Masterpiece</em></h2>
+                <p class="section-sub">Fill in the form and we will reach out within 24 hours to discuss your vision, timeline, and pricing. Every painting is a unique collaboration.</p>
+                <div class="order-steps">
+                    <div class="order-step">
+                        <div class="step-num">1</div>
+                        <p class="step-text">Submit your enquiry with painting details and reference photos.</p>
+                    </div>
+                    <div class="order-step">
+                        <div class="step-num">2</div>
+                        <p class="step-text">Receive a personalised quote and timeline within 24 hours.</p>
+                    </div>
+                    <div class="order-step">
+                        <div class="step-num">3</div>
+                        <p class="step-text">Approve the initial sketch and confirm 50% advance payment.</p>
+                    </div>
+                    <div class="order-step">
+                        <div class="step-num">4</div>
+                        <p class="step-text">Receive progress updates and your finished painting with care packaging.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="order-form-wrap">
+                    <form id="orderForm" onsubmit="submitOrder(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Your Name *</label>
+                                <input type="text" id="fname" placeholder="Full name" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number *</label>
+                                <input type="tel" id="phone" placeholder="+91 XXXXXXXXXX" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="email" placeholder="your@email.com" />
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Painting Type *</label>
+                                <select id="ptype" required>
+                                    <option value="">Select type…</option>
+                                    <option>Portrait</option>
+                                    <option>Landscape / Nature</option>
+                                    <option>Pet Portrait</option>
+                                    <option>Abstract / Décor</option>
+                                    <option>Religious / Spiritual</option>
+                                    <option>Gift Painting</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Canvas Size</label>
+                                <select id="size">
+                                    <option value="">Select size…</option>
+                                    <option>Small (12×16 in)</option>
+                                    <option>Medium (18×24 in)</option>
+                                    <option>Large (24×36 in)</option>
+                                    <option>Extra Large (36×48 in)</option>
+                                    <option>Custom size</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Your Message / Description *</label>
+                            <textarea id="message" placeholder="Describe your painting vision, occasion, colour preferences, mood…" required></textarea>
+                        </div>
+                        <p class="form-note">* Required fields. Reference photos can be shared via WhatsApp after submission.</p>
+                        <button type="submit" class="btn-submit">Send My Order Enquiry →</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- ══════════════════════════════════════
+  CONTACT
+════════════════════════════════════════ -->
+<section id="contact">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="reveal">
+                <p class="section-tag">Get In Touch</p>
+                <h2 class="section-title">We'd Love to<br><em>Hear From You</em></h2>
+                <p class="section-sub">Reach out for custom paintings, collaborations, exhibitions, or any enquiries. Based in Kerala, delivering across India and worldwide.</p>
+                <div class="contact-items">
+                    <div class="contact-item">
+                        <div class="ci-icon">📍</div>
+                        <div>
+                            <div class="ci-label">Studio Location</div>
+                            <div class="ci-val">Ernakulam, Kerala, India – 682 001</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="ci-icon">📞</div>
+                        <div>
+                            <div class="ci-label">Phone / WhatsApp</div>
+                            <div class="ci-val">+91 98765 43210</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="ci-icon">✉️</div>
+                        <div>
+                            <div class="ci-label">Email</div>
+                            <div class="ci-val">hello@jinaraarts.com</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="ci-icon">🕐</div>
+                        <div>
+                            <div class="ci-label">Studio Hours</div>
+                            <div class="ci-val">Mon–Sat: 9 AM – 7 PM IST</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-row">
+                    <a href="#" class="social-btn" title="Instagram">📸</a>
+                    <a href="#" class="social-btn" title="Facebook">👍</a>
+                    <a href="#" class="social-btn" title="YouTube">▶️</a>
+                    <a href="https://wa.me/919876543210" class="social-btn" title="WhatsApp" target="_blank">💬</a>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="contact-form-wrap">
+                    <p class="section-tag">Send a Message</p>
+                    <h3 class="section-title" style="font-size:1.6rem; margin-bottom:1.5rem;">Write to <em>Us</em></h3>
+                    <form id="contactForm" onsubmit="submitContact(event)">
+                        <div class="form-group">
+                            <label>Name *</label>
+                            <input type="text" id="cname" placeholder="Your full name" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" id="cemail" placeholder="your@email.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" id="csubject" placeholder="What is this about?" />
+                        </div>
+                        <div class="form-group">
+                            <label>Message *</label>
+                            <textarea id="cmessage" placeholder="Tell us anything…" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Send Message →</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  FOOTER
+════════════════════════════════════════ -->
+<footer>
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-logo">
+                <a href="#hero">
+                    <img src="logo.png" alt="Jinara Logo" />
+                </a>
+            </div>
+            <p class="footer-copy">© 2026 Jinara · All rights reserved · Kerala, India</p>
+            <nav class="footer-links">
+                <a href="#hero">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#order">Order</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </div>
+</footer>
+
+<script>
+    /* ── Scroll reveal ── */
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+        });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => io.observe(r));
+
+    /* ── Header shadow on scroll ── */
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+        header.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    /* ── Cinematic Background Video Slideshow ── */
+    const heroVideos = [
+        '11932760-hd_1920_1080_25fps.mp4',
+        '4463150-hd_1920_1080_25fps.mp4',
+        '6607404-hd_1920_1080_25fps.mp4'
+    ];
+    let currentVideoIndex = 0;
+    const heroVideoEl = document.getElementById('hero-video');
+    
+    if (heroVideoEl) {
+        // Guarantee muted state for browser autoplay compliance
+        heroVideoEl.muted = true;
+        heroVideoEl.defaultMuted = true;
+
+        const playVideo = () => {
+            heroVideoEl.play().catch(err => {
+                console.log('Autoplay deferred. Waiting for user interaction.', err);
+                const resumePlay = () => {
+                    heroVideoEl.play();
+                    document.removeEventListener('click', resumePlay);
+                    document.removeEventListener('scroll', resumePlay);
+                    document.removeEventListener('touchstart', resumePlay);
+                };
+                document.addEventListener('click', resumePlay);
+                document.addEventListener('scroll', resumePlay);
+                document.addEventListener('touchstart', resumePlay);
+            });
+        };
+
+        // Try playing immediately on load
+        playVideo();
+
+        // Cycle to next video when current ends
+        heroVideoEl.addEventListener('ended', () => {
+            currentVideoIndex = (currentVideoIndex + 1) % heroVideos.length;
+            heroVideoEl.style.opacity = '0';
+            
+            setTimeout(() => {
+                heroVideoEl.src = heroVideos[currentVideoIndex];
+                heroVideoEl.muted = true;
+                heroVideoEl.load();
+                playVideo();
+            }, 1000); // 1s matches transition duration
+        });
+
+        // Only fade video back in when it has actively started playing (no black/stuck frames)
+        heroVideoEl.addEventListener('playing', () => {
+            heroVideoEl.style.opacity = '1';
+        });
+    }
+
+    /* ── Seamless Looping Cinematic Luxury Background Canvas ── */
+    (function initLuxuryCanvas() {
+        const canvas = document.getElementById('luxury-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        // Dark luxury palette colors
+        const colors = [
+            'rgba(122, 62, 18, 0.45)',  // Rich bronze #7A3E12
+            'rgba(223, 207, 165, 0.3)', // Warm beige #dfcfa5
+            'rgba(213, 194, 149, 0.25)',// Warm gold #d5c295
+            'rgba(92, 46, 11, 0.35)',   // Deep chocolate
+            'rgba(122, 62, 18, 0.2)'    // Soft rust
+        ];
+
+        // Particle class definition
+        class Particle {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * height; // Start spread out initially
+            }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = height + Math.random() * 100;
+                this.size = Math.random() * 4 + 1.5;
+                this.speedY = -(Math.random() * 0.4 + 0.15);
+                this.speedX = (Math.random() - 0.5) * 0.2;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.opacity = Math.random() * 0.6 + 0.2;
+                this.pulseSpeed = Math.random() * 0.02 + 0.005;
+                this.pulseAngle = Math.random() * Math.PI;
+                this.depthBlur = Math.random() > 0.7 ? Math.random() * 3 + 2 : 0; // Cinematic blur simulation
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.pulseAngle += this.pulseSpeed;
+
+                // Center repelling / clean center logic
+                const centerX = width / 2;
+                const centerY = height / 2;
+                const dx = this.x - centerX;
+                const dy = this.y - centerY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const repelRadius = Math.min(width, height) * 0.28; // Clean zone radius
+
+                if (dist < repelRadius) {
+                    const force = (repelRadius - dist) / repelRadius;
+                    const angle = Math.atan2(dy, dx);
+                    // Push particles away from center to keep typography clean
+                    this.x += Math.cos(angle) * force * 0.8;
+                    this.y += Math.sin(angle) * force * 0.8;
+                    this.opacity = Math.max(0.08, this.opacity - 0.02); // Fade out slightly in center
+                } else {
+                    this.opacity = Math.min(0.8, this.opacity + 0.01);
+                }
+
+                if (this.y < -50 || this.x < -50 || this.x > width + 50) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.save();
+                if (this.depthBlur > 0) {
+                    ctx.filter = `blur(${this.depthBlur}px)`;
+                }
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity * (0.7 + Math.sin(this.pulseAngle) * 0.3);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Initialize particles
+        const particleCount = 80;
+        const particles = [];
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        // Smoke / Wave elements (slow morphing Bezier curves)
+        class SmokeWave {
+            constructor(color, speed, amplitude) {
+                this.color = color;
+                this.speed = speed;
+                this.amplitude = amplitude;
+                this.angle = Math.random() * Math.PI * 2;
+                this.points = [];
+                for (let i = 0; i <= 5; i++) {
+                    this.points.push({
+                        x: (width / 5) * i,
+                        y: height * 0.5 + (Math.random() - 0.5) * 200,
+                        baseY: height * 0.5 + (Math.random() - 0.5) * 150,
+                        speedOffset: Math.random() * Math.PI
+                    });
+                }
+            }
+            update() {
+                this.angle += this.speed;
+                this.points.forEach((pt, i) => {
+                    // Slow wave oscillation
+                    pt.y = pt.baseY + Math.sin(this.angle + pt.speedOffset) * this.amplitude;
+                });
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.points[0].x, this.points[0].y);
+                for (let i = 0; i < this.points.length - 1; i++) {
+                    const xc = (this.points[i].x + this.points[i + 1].x) / 2;
+                    const yc = (this.points[i].y + this.points[i + 1].y) / 2;
+                    ctx.quadraticCurveTo(this.points[i].x, this.points[i].y, xc, yc);
+                }
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = 14;
+                ctx.shadowBlur = 60;
+                ctx.shadowColor = 'rgba(122, 62, 18, 0.3)';
+                ctx.globalAlpha = 0.08;
+                ctx.stroke();
+                ctx.shadowBlur = 0; // Reset shadow
+            }
+        }
+
+        // Create elegant smoke waves
+        const waves = [
+            new SmokeWave('rgba(122, 62, 18, 0.25)', 0.002, 120), // Bronze wave
+            new SmokeWave('rgba(223, 207, 165, 0.15)', 0.0015, 90), // Beige wave
+            new SmokeWave('rgba(92, 46, 11, 0.2)', 0.001, 150)    // Dark chocolate wave
+        ];
+
+        let glowAngle = 0;
+
+        // Loop animation
+        function animate() {
+            // Very soft tail to blend particles (natural motion blur)
+            ctx.fillStyle = 'rgba(12, 8, 5, 0.08)'; // Dark luxury background color
+            ctx.fillRect(0, 0, width, height);
+
+            // 1. Soft Bronze Glow (pulses slowly)
+            glowAngle += 0.003;
+            const radialGlow = ctx.createRadialGradient(
+                width / 2 + Math.sin(glowAngle) * 100, 
+                height / 2 + Math.cos(glowAngle) * 50, 
+                100, 
+                width / 2, 
+                height / 2, 
+                Math.max(width, height) * 0.6
+            );
+            radialGlow.addColorStop(0, 'rgba(122, 62, 18, 0.25)'); // Warm glowing bronze center
+            radialGlow.addColorStop(0.5, 'rgba(28, 17, 9, 0.08)');
+            radialGlow.addColorStop(1, 'rgba(12, 8, 5, 0)');
+            ctx.fillStyle = radialGlow;
+            ctx.fillRect(0, 0, width, height);
+
+            // 2. Update and Draw Smoke Waves
+            waves.forEach(w => {
+                w.update();
+                w.draw();
+            });
+
+            // 3. Update and Draw Particles
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Handle Resize
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles.forEach(p => p.reset());
+        });
+
+        // ── Visual Toggle Button Logic ──
+        const toggleBtn = document.getElementById('visualToggleBtn');
+        const videoEl = document.getElementById('hero-video');
+        if (toggleBtn && videoEl) {
+            toggleBtn.addEventListener('click', () => {
+                const isCanvasActive = canvas.classList.toggle('active');
+                videoEl.classList.toggle('inactive', isCanvasActive);
+                
+                if (isCanvasActive) {
+                    toggleBtn.innerHTML = '🎥 Cinematic Video Loops';
+                    toggleBtn.style.background = 'rgba(122, 62, 18, 0.6)';
+                } else {
+                    toggleBtn.innerHTML = '✨ Interactive Bronze Canvas';
+                    toggleBtn.style.background = 'rgba(28, 17, 9, 0.45)';
+                }
+            });
+        }
+    })();
+
+    /* ── Hamburger menu ── */
+    const hamburger = document.getElementById('hamburger');
+    const navMobile = document.getElementById('nav-mobile');
+    hamburger.addEventListener('click', () => {
+        const isOpen = hamburger.classList.toggle('open');
+        hamburger.setAttribute('aria-expanded', isOpen);
+        navMobile.classList.toggle('open', isOpen);
+    });
+    // Close on link click
+    document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', false);
+            navMobile.classList.remove('open');
+        });
+    });
+
+    /* ── WhatsApp helpers ── */
+    function waMessage(msg) {
+        window.open('https://wa.me/919876543210?text=' + encodeURIComponent(msg), '_blank');
+    }
+
+    /* ── Services Search ── */
+    const servicesSearch = document.getElementById('servicesSearch');
+    if (servicesSearch) {
+        servicesSearch.addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const desc = card.querySelector('p').textContent.toLowerCase();
+                if (title.includes(term) || desc.includes(term)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    }
+
+    /* ── Order form ── */
+    function submitOrder(e) {
+        e.preventDefault();
+        const name    = document.getElementById('fname').value;
+        const phone   = document.getElementById('phone').value;
+        const type    = document.getElementById('ptype').value;
+        const size    = document.getElementById('size').value || 'Not specified';
+        const message = document.getElementById('message').value;
+        const text = `Hi Jinara! I'd like to order a custom painting.\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Type:* ${type}\n*Size:* ${size}\n*Details:* ${message}`;
+        window.open('https://wa.me/919876543210?text=' + encodeURIComponent(text), '_blank');
+    }
+
+    /* ── Contact form ── */
+    function submitContact(e) {
+        e.preventDefault();
+        const name    = document.getElementById('cname').value;
+        const email   = document.getElementById('cemail').value;
+        const subject = document.getElementById('csubject').value || 'General Enquiry';
+        const message = document.getElementById('cmessage').value;
+        const text = `Hi Jinara!\n\n*Name:* ${name}\n*Email:* ${email}\n*Subject:* ${subject}\n*Message:* ${message}`;
+        window.open('https://wa.me/919876543210?text=' + encodeURIComponent(text), '_blank');
+    }
+
+
+
+    /* ── Premium Gallery Pagination & Filtering ── */
+    const galleryData = [
+        { type: 'oil', src: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=600&q=80', title: 'Sunset Canvas', cat: 'Oil Painting' },
+        { type: 'digital', src: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80', title: 'Neon Dreams', cat: 'Digital Art' },
+        { type: 'photo', src: 'https://images.unsplash.com/photo-1554046920-90dc20696264?auto=format&fit=crop&w=600&q=80', title: 'Urban Light', cat: 'Photography' },
+        { type: 'fashion', src: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=600&q=80', title: 'Vogue Minimal', cat: 'Fashion' },
+        { type: 'oil', src: 'https://images.unsplash.com/photo-1580136608260-4eb11f4b24fe?auto=format&fit=crop&w=600&q=80', title: 'Abstract Wave', cat: 'Oil Painting' },
+        { type: 'digital', src: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&w=600&q=80', title: 'Cyber City', cat: 'Digital Art' },
+        { type: 'photo', src: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?auto=format&fit=crop&w=600&q=80', title: 'Monochrome', cat: 'Photography' },
+        { type: 'fashion', src: 'https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?auto=format&fit=crop&w=600&q=80', title: 'Silks', cat: 'Fashion' },
+        { type: 'digital', src: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=600&q=80', title: 'Holographic', cat: 'Digital Art' },
+        { type: 'oil', src: 'https://images.unsplash.com/photo-1578301978693-85fa9c03fa75?auto=format&fit=crop&w=600&q=80', title: 'Golden Hour', cat: 'Oil Painting' },
+        { type: 'photo', src: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=600&q=80', title: 'Lens Flare', cat: 'Photography' },
+        { type: 'fashion', src: 'https://images.unsplash.com/photo-1550614000-4b95d46618d1?auto=format&fit=crop&w=600&q=80', title: 'Street Style', cat: 'Fashion' }
+    ];
+
+    const ITEMS_PER_PAGE = 3;
+    let currentGalleryCategory = 'all';
+    let currentGalleryPage = 1;
+    let galleryTimer = null;
+
+    const gridEl = document.getElementById('galleryGrid');
+    const paginationEl = document.getElementById('galleryPagination');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    function getFilteredItems() {
+        if (currentGalleryCategory === 'all') return galleryData;
+        return galleryData.filter(item => item.type === currentGalleryCategory);
+    }
+
+    function renderGalleryPage() {
+        if (!gridEl) return;
+        const items = getFilteredItems();
+        const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
+        
+        if (currentGalleryPage > totalPages) currentGalleryPage = totalPages || 1;
+        if (currentGalleryPage < 1) currentGalleryPage = 1;
+
+        const startIndex = (currentGalleryPage - 1) * ITEMS_PER_PAGE;
+        const pageItems = items.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+        gridEl.classList.add('fade-out');
+        gridEl.classList.remove('fade-in');
+
+        setTimeout(() => {
+            gridEl.innerHTML = '';
+            pageItems.forEach((item, index) => {
+                gridEl.innerHTML += `
+                    <div class="gallery-item" style="transition-delay: ${index * 0.1}s;">
+                        <img src="${item.src}" class="gallery-img" alt="${item.title}" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-item-title">${item.title}</h3>
+                            <span class="gallery-item-cat">${item.cat}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            gridEl.classList.remove('fade-out');
+            gridEl.classList.add('fade-in');
+            renderPagination(totalPages);
+        }, 400);
+    }
+
+    function renderPagination(totalPages) {
+        if (!paginationEl) return;
+        let html = '';
+        
+        if (totalPages > 1) {
+            html += `<button class="page-nav-text" onclick="changeGalleryPage(${currentGalleryPage - 1})" ${currentGalleryPage === 1 ? 'disabled' : ''}>&lt; Previous</button>`;
+            
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button class="page-btn ${i === currentGalleryPage ? 'active' : ''}" onclick="changeGalleryPage(${i})">${i}</button>`;
+            }
+
+            html += `<button class="page-nav-text" onclick="changeGalleryPage(${currentGalleryPage + 1})" ${currentGalleryPage === totalPages ? 'disabled' : ''}>Next &gt;</button>`;
+        }
+        
+        paginationEl.innerHTML = html;
+    }
+
+    window.changeGalleryPage = function(page) {
+        currentGalleryPage = page;
+        renderGalleryPage();
+        resetGalleryTimer();
+    };
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            currentGalleryCategory = e.target.getAttribute('data-filter');
+            currentGalleryPage = 1;
+            renderGalleryPage();
+            resetGalleryTimer();
+        });
+    });
+
+    function nextGalleryPage() {
+        const items = getFilteredItems();
+        const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
+        if (totalPages <= 1) return;
+
+        currentGalleryPage++;
+        if (currentGalleryPage > totalPages) currentGalleryPage = 1;
+        renderGalleryPage();
+    }
+
+    function resetGalleryTimer() {
+        clearInterval(galleryTimer);
+        galleryTimer = setInterval(nextGalleryPage, 5000); // Transitions every 5 seconds
+    }
+
+    if (gridEl) {
+        renderGalleryPage();
+        resetGalleryTimer();
+    }
+
+
+</script>
+</body>
+</html>
